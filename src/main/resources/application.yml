@@ -1,0 +1,15 @@
+server:
+  port: 28083
+
+genefile:
+  ormName: Department
+  # table name
+  tableName: department
+  # filename
+  mapperFileName: ${genefile.javafilePath}/com/sss/web/mapper/${genefile.ormName}Mapper.java
+  xmlName: ${genefile.resourcePath}/mapper/${genefile.ormName}MapperExt.xml
+  javafilePath: /src/main/java
+  resourcePath: /src/main/resources
+  templateDirName: ${genefile.resourcePath}/templates
+  templateMapper: ${genefile.templateDirName}/TemplateMapper.txt
+  templateMapperXml: ${genefile.templateDirName}/TemplateMapperExt.txt
