@@ -111,8 +111,8 @@
 //
 //    @Test
 //    public void testCreateService() throws IOException {
-//        copyFileWithOurRule(templateDirName + "TemplateService.txt", serviceFilePath + serviceInterfaceName);
-//        copyFileWithOurRule(templateDirName + "TemplateServiceImpl.txt", serviceFilePath + serviceImplName);
+//        copyFileWithOurRule(templateDirName + "service.ftl", serviceFilePath + serviceInterfaceName);
+//        copyFileWithOurRule(templateDirName + "serviceImpl.ftl", serviceFilePath + serviceImplName);
 //    }
 //
 //    @Test

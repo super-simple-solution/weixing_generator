@@ -1,8 +1,0 @@
-package com.yunjie.mapper.mysql;
-
-import com.yunjie.ormbase.autogenerate.model.Template;
-import com.yunjie.ormbase.common.mapper.BaseMapper;
-
-public interface TemplateMapper extends BaseMapper<Template, Integer> {
-
-}

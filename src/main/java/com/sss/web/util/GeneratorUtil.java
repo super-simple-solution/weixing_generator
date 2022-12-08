@@ -1,12 +1,12 @@
 package com.sss.web.util;
 
 import com.sss.web.config.GeneratorConfig;
-import lombok.Cleanup;
+import com.sss.web.config.GenerateFile;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author liyanan
@@ -26,44 +26,64 @@ public class GeneratorUtil {
     }
 
     @SneakyThrows
-    public static void testCreateMapper() {
-        File directory = new File("");// 参数为空
-        String courseFile = directory.getCanonicalPath();
-        // create mapper
-        copyFileWithOurRule(courseFile, generatorConfig.getTemplateMapper(), generatorConfig.getMapperFileName());
-        copyFileWithOurRule(courseFile, generatorConfig.getTemplateMapperXml(), generatorConfig.getXmlName());
+    public static void createMapper() {
+        //从config对象中获得模板对象。需要制定一个模板文件的名字。
+        //创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。
+        Map<String, String> root = new HashMap<>();
+        for (GenerateFile generateFile : generatorConfig.getGenerateFiles()) {
+            root.put("mapper_package_name", generatorConfig.getMapperPackage());
+            root.put("entity_name", generateFile.getOrmName());
+            root.put("id_type", "Integer");
+            root.put("table_name", generateFile.getTableName());
+            String xmlName = generatorConfig.getMapperExtPath() + "/" + generateFile.getOrmName() + "MapperExt.xml";
+            String mapperName = generatorConfig.getJavafilePath() +"/"+ generatorConfig.getMapperPackage().replaceAll("\\.", "/") + "/" + generateFile.getOrmName() + "Mapper.java";
+            FreeMarkerUtil.generatorFile(generatorConfig.getTemplateDirName(), "mapper.ftl", mapperName, root);
+            FreeMarkerUtil.generatorFile(generatorConfig.getTemplateDirName(), "mapperExt.ftl", xmlName, root);
+        }
+    }
+
+    @SneakyThrows
+    public static void createService() {
+        //从config对象中获得模板对象。需要制定一个模板文件的名字。
+        //创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。
+        Map<String, String> root = new HashMap<>();
+        for (GenerateFile generateFile : generatorConfig.getGenerateFiles()) {
+            root.put("service_package", generatorConfig.getServicePackage());
+            root.put("entity_name", generateFile.getOrmName());
+            root.put("entity_package", generatorConfig.getEntityPackage());
+            root.put("base_service_package", generatorConfig.getBaseServicePackage());
+            root.put("id_type", "Integer");
+            String serviceName = generatorConfig.getJavafilePath() +"/"+ generatorConfig.getServicePackage().replaceAll("\\.", "/") + "/" + generateFile.getOrmName() + "Service.java";
+            String serviceImplName = generatorConfig.getJavafilePath() +"/"+ generatorConfig.getServicePackage().replaceAll("\\.", "/") + "/" + generateFile.getOrmName() + "ServiceImpl.java";
+            FreeMarkerUtil.generatorFile(generatorConfig.getTemplateDirName(), "service.ftl", serviceName, root);
+            FreeMarkerUtil.generatorFile(generatorConfig.getTemplateDirName(), "serviceImpl.ftl", serviceImplName, root);
+        }
     }
 
 
     @SneakyThrows
-    private static void copyFileWithOurRule(String parent, String templateFile, String newFile) {
-        templateFile = parent + templateFile;
-        newFile = parent + newFile;
-        File file = new File(newFile);
-        if (file.exists()) {
-            log.info("file exist: {}", newFile);
-            return;
+    public static void createController() {
+        //从config对象中获得模板对象。需要制定一个模板文件的名字。
+        //创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。
+        Map<String, String> root = new HashMap<>();
+        for (GenerateFile generateFile : generatorConfig.getGenerateFiles()) {
+            root.put("controller_package", generatorConfig.getControllerPackage());
+            root.put("request_mapping", generateFile.getRequestMapping());
+            root.put("entity_name", generateFile.getOrmName());
+            root.put("create", generateFile.getCreate());
+            root.put("delete", generateFile.getDelete());
+            root.put("update", generateFile.getUpdate());
+            root.put("list", generateFile.getList());
+            root.put("proto_obj_name", generateFile.getProtoObjName());
+            String controllerName = generatorConfig.getJavafilePath() +"/"+ generatorConfig.getControllerPackage().replaceAll("\\.", "/") + "/" + generateFile.getOrmName() + "Controller.java";
+            FreeMarkerUtil.generatorFile(generatorConfig.getTemplateDirName(), "controller.ftl", controllerName, root);
         }
+    }
 
-        InputStream f = new FileInputStream(templateFile);
-        @Cleanup
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(f, StandardCharsets.UTF_8));
-
-        BufferedWriter bw = new BufferedWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8)));
-        bufferedReader.lines().forEach(str -> {
-            str = str.replaceAll("Template", generatorConfig.getOrmName())
-                    .replaceAll("tableName", generatorConfig.getTableName());
-
-            try {
-                bw.write(str);
-                bw.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-                log.info("write error: {}", e.toString());
-            }
-        });
-
-        log.info("create file success：{}", newFile);
-        bw.flush();
+    @SneakyThrows
+    public static void createAll() {
+        createMapper();
+        createService();
+        createController();
     }
 }

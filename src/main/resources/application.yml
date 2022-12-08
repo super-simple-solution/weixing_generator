@@ -2,14 +2,25 @@ server:
   port: 28083
 
 genefile:
-  ormName: Department
-  # table name
-  tableName: department
-  # filename
-  mapperFileName: ${genefile.javafilePath}/com/sss/web/mapper/${genefile.ormName}Mapper.java
-  xmlName: ${genefile.resourcePath}/mapper/${genefile.ormName}MapperExt.xml
-  javafilePath: /src/main/java
-  resourcePath: /src/main/resources
+  javafilePath: src/main/java
+  resourcePath: src/main/resources
+  mapperPackage: com.sss.web.mapper
+  mapperExtPath: src/main/resources/mapper
   templateDirName: ${genefile.resourcePath}/templates
-  templateMapper: ${genefile.templateDirName}/TemplateMapper.txt
-  templateMapperXml: ${genefile.templateDirName}/TemplateMapperExt.txt
+
+  servicePackage: com.sss.web.service
+  baseServicePackage: com.sss.ormbase.common.service
+  entityPackage: com.sss.ormbase.autogenerate.model
+
+  controllerPackage: com.sss.web.controller
+
+  generateFiles:
+    - ormName: Department
+      # table name
+      tableName: department
+      create: CreateDepartment
+      update: UpdateDepartment
+      delete: DeleteDepartment
+      list: ListDepartment
+      protoObjName: DepartmentItem
+      requestMapping: /department

@@ -20,6 +20,21 @@ class GeneratorUtilTest {
 
     @Test
     void testCreateMapper() {
-        GeneratorUtil.testCreateMapper();
+        GeneratorUtil.createMapper();
+    }
+
+    @Test
+    void testCreateService() {
+        GeneratorUtil.createService();
+    }
+
+    @Test
+    void testCreateController() {
+        GeneratorUtil.createController();
+    }
+
+    @Test
+    void createAll() {
+        GeneratorUtil.createAll();
     }
 }

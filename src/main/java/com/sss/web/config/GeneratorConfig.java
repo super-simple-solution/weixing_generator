@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author liyanan
  * @date 2022/08/26 17:24
@@ -12,10 +14,14 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "genefile")
 @Data
 public class GeneratorConfig {
-    String ormName;
-    String templateMapper;
-    String templateMapperXml;
-    String xmlName;
-    String tableName;
-    String mapperFileName;
+  private String mapperPackage;
+  private String mapperExtPath;
+  private String templateDirName;
+  private String javafilePath;
+  private String servicePackage;
+  private String baseServicePackage;
+  private String entityPackage;
+  private String controllerPackage;
+
+  private List<GenerateFile> generateFiles;
 }
