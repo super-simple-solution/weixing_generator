@@ -35,6 +35,8 @@ public class GeneratorUtil {
             root.put("entity_name", generateFile.getOrmName());
             root.put("id_type", "Integer");
             root.put("table_name", generateFile.getTableName());
+            root.put("base_mapper_package", generatorConfig.getBaseMapperPackage());
+            root.put("entity_package", generatorConfig.getEntityPackage());
             String xmlName = generatorConfig.getMapperExtPath() + "/" + generateFile.getOrmName() + "MapperExt.xml";
             String mapperName = generatorConfig.getJavafilePath() +"/"+ generatorConfig.getMapperPackage().replaceAll("\\.", "/") + "/" + generateFile.getOrmName() + "Mapper.java";
             FreeMarkerUtil.generatorFile(generatorConfig.getTemplateDirName(), "mapper.ftl", mapperName, root);

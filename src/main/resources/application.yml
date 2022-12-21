@@ -2,25 +2,56 @@ server:
   port: 28083
 
 genefile:
-  javafilePath: src/main/java
-  resourcePath: src/main/resources
-  mapperPackage: com.sss.web.mapper
-  mapperExtPath: src/main/resources/mapper
-  templateDirName: ${genefile.resourcePath}/templates
+  javafilePath: E:/laddercloud-work-code-cicd/gongyi/web-awesomed/src/main/java
+  resourcePath: E:/laddercloud-work-code-cicd/gongyi/web-awesomed/src/main/resources
+  mapperPackage: com.yunjie.mapper
+  mapperExtPath: E:/laddercloud-work-code-cicd/gongyi/web-awesomed/src/main/resources/mapper
+  templateDirName: src/main/resources/templates
 
-  servicePackage: com.sss.web.service
-  baseServicePackage: com.sss.ormbase.common.service
-  entityPackage: com.sss.ormbase.autogenerate.model
+  servicePackage: com.yunjie.service
+  baseServicePackage: com.yunjie.ormbase.common.service
+  baseMapperPackage: com.yunjie.ormbase.common.mapper
+  entityPackage: com.yunjie.ormbase.autogenerate.model
 
-  controllerPackage: com.sss.web.controller
+  controllerPackage: com.yunjie.web.controller
 
   generateFiles:
-    - ormName: Department
+#    - ormName: StopSign
+#      # table name
+#      tableName: stop_sign
+#      create: AddStopSignItem
+#      update: EditStopSignItem
+#      delete: DeleteStopSignItem
+#      list: GetStopSignItem
+#      protoObjName: StopSignItem
+#      requestMapping: /stopsign
+#
+#    - ormName: StopSignGroup
+#      # table name
+#      tableName: stop_sign_group
+#      create: AddStopSignGroupItem
+#      update: EditStopSignGroupItem
+#      delete: DeleteStopSignGroupItem
+#      list: GetStopSignGroupItem
+#      protoObjName: StopSignGroupItem
+#      requestMapping: /stopsigngroup
+#
+#    - ormName: StopSignContent
+#      # table name
+#      tableName: stop_sign_content
+#      create: AddStopSignContentItem
+#      update: x
+#      delete: DeleteStopSignContentItem
+#      list: GetStopSignContentItem
+#      protoObjName: StopSignContentItem
+#      requestMapping: /stopsigncontent
+
+    - ormName: StopSignDaily
       # table name
-      tableName: department
-      create: CreateDepartment
-      update: UpdateDepartment
-      delete: DeleteDepartment
-      list: ListDepartment
-      protoObjName: DepartmentItem
-      requestMapping: /department
+      tableName: stop_sign_daily
+      create: x
+      update: x
+      delete: x
+      list: GetStopSignDailyItem
+      protoObjName: StopSignDailyItem
+      requestMapping: /dashboard

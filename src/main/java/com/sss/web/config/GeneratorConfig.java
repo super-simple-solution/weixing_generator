@@ -22,6 +22,7 @@ public class GeneratorConfig {
   private String baseServicePackage;
   private String entityPackage;
   private String controllerPackage;
+  private String baseMapperPackage;
 
   private List<GenerateFile> generateFiles;
 }
